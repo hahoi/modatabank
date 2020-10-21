@@ -1,0 +1,87 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "現場紀錄表",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "classify",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "county",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "star",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "現場紀錄表",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "classify",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "star",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "現場紀錄表",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "county",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "star",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "現場紀錄表",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "RedDot",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "classify",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "county",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "star",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "現場紀錄表",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "RedDot",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "star",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
