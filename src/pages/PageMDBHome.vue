@@ -7,24 +7,26 @@
       <q-card-section>
         <div class="row q-ma-md q-gutter-xs text-h6">
           <q-select
-            class="col-12"
+            class="col-12 text-h6"
             v-model="county"
             :options="counties"
             label="選擇縣市"
             clearable
             outlined
+            popup-content-class="text-h6"
           />
           <q-select
-            class="col-12"
+            class="col-12 text-h6"
             v-model="classify"
             :options="Cassify"
             label="分類"
             clearable
             outlined
+            popup-content-class="text-h6"
           />
           <!-- 例:(王 王大 王大軍 <=正確)（大 大軍 <= 錯誤） -->
           <q-input
-            class="col-12"
+            class="col-12 text-h6"
             bottom-slots
             outlined
             v-model="name"
