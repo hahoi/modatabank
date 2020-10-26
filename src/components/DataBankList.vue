@@ -174,6 +174,10 @@
 
     <q-dialog v-model="showPhoto">
       <q-card>
+        <q-card-section class="row items-center q-py-none bg-grey-5">
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
         <img :src="photoUrl" />
       </q-card>
     </q-dialog>

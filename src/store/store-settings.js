@@ -6,7 +6,8 @@ const state = {
 	settings: {
 		announcement: "",
 		delay: 3000,
-		sysTitle: "行動資料庫"
+		sysTitle: "行動資料庫",
+		version:"",
 	}
 }
 
@@ -64,7 +65,7 @@ const actions = {
 			.get()
 			.then(doc => {
 				// console.log("restore系統參數",doc.data())
-				commit('setSettings', doc.data())
+				commit('setSettings', doc.data())			
 			}).catch(err => {
 				console.log(err.message)
 			});
