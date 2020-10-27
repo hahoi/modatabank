@@ -9,7 +9,7 @@
         style="font-family: 'Dancing Script', cursive"
       >
         Mobile Data Bank<br />
-        <span class="text-caption">V {{ settings.version }} </span>
+        <span class="text-caption">V {{ version }} </span>
       </div>
     </div>
     <div v-else>
@@ -22,6 +22,13 @@
         </q-card-section>
       </q-card>
     </div>
+    <q-btn
+      color="white"
+      text-color="black"
+      label="系統更新"      
+      @click="reload"
+      v-if="updateFlag"
+    />
   </q-page>
 </template>
 
@@ -30,10 +37,18 @@ import { LocalStorage } from "quasar";
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   name: "PageIndex",
+  data() {
+    return {
+      // 目前版本存在LocalStore
+      version: LocalStorage.getItem('version') || ""
+    };
+  },
+  created() {},
+
   mounted() {
     // console.log(this.settings.announcement.length);
+
     this.setMDB(false);
-    this.checkVersion();
     setTimeout(() => {
       //跳轉
       this.go();
@@ -42,25 +57,28 @@ export default {
   computed: {
     // ...mapState("settings", ["version"]),
     ...mapGetters("settings", ["settings"]),
+    //決定是否顯示更新
+    updateFlag() {
+      //讀取資料庫版本
+      this.getSettings();
+      // 讀取LocalStoreage版本
+      this.version = LocalStorage.getItem('version')
+      //兩個版本不一樣就顯示更新按鈕
+      return this.settings.version !== this.version;
+    },
   },
   methods: {
     ...mapMutations("LoadData", ["setMDB"]),
-    ...mapActions("settings", ["getSettings"]),
-    async checkVersion() {
-      await this.getSettings();
-      let dbVer = this.settings.version 
-      let lsVer = await LocalStorage.getItem("version")
-
-        if( dbVer !== lsVer ){
-        //更新更新
-        window.location.reload(true);
-        //保存現有版本
-        LocalStorage.set("version", this.settings.version);
-      }
-    },
+    ...mapActions("settings", ["getSettings", "setVersion"]),
     go() {
       this.setMDB(true);
       this.$router.push("/MDB").catch((err) => {});
+    },
+    reload() {
+      //更新
+      window.location.reload(true);
+      //保存最新版本
+      LocalStorage.set("version", this.settings.version);
     },
   },
 };
