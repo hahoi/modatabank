@@ -43,6 +43,10 @@
               <td colspan="3" style="font-size: 18px">{{ task.address }}</td>
             </tr>
             <tr>
+              <td style="font-size: 18px">Email</td>
+              <td colspan="3" style="font-size: 18px">{{ task.email }}</td>
+            </tr>
+            <tr>
               <td style="font-size: 18px">職業職稱</td>
               <td colspan="3" style="font-size: 18px">{{ task.proTitle }}</td>
             </tr>

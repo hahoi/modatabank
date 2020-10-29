@@ -9,7 +9,7 @@
         style="font-family: 'Dancing Script', cursive"
       >
         Mobile Data Bank<br />
-        <span class="text-caption">V {{ version }} </span>
+        <span class="text-caption">V 1.4 </span>
       </div>
     </div>
     <div v-else>
@@ -25,9 +25,8 @@
     <q-btn
       color="white"
       text-color="black"
-      label="系統更新"      
-      @click="reload"
-      v-if="updateFlag"
+      label="網頁重整"      
+      @click="reload"     
     />
   </q-page>
 </template>
@@ -78,7 +77,7 @@ export default {
       //更新
       window.location.reload(true);
       //保存最新版本
-      LocalStorage.set("version", this.settings.version);
+      // LocalStorage.set("version", this.settings.version);
     },
   },
 };

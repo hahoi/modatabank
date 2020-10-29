@@ -102,7 +102,7 @@ export default {
       this.timer = setTimeout(() => {
         this.actualMaxPosition += 9;
         done();
-      }, 500);
+      }, 50);
     },
     done() {
       // clearTimeout(this.timer);
@@ -119,6 +119,7 @@ export default {
         "縣市",
         "區域",
         "地址",
+        "Email",
         "分類",
         "職業職稱",
         "社團職稱",
@@ -141,6 +142,7 @@ export default {
         county: "",
         district: "",
         address: "",
+        email:"",
         classify: "",
         proTitle: "",
         clubTitle: "",
@@ -164,7 +166,7 @@ export default {
       // let tr = "<table id='tblData' ref='tblData' border='1'>";
       //     tr +="<thead><tr><th>姓名</th><th>手機</th><th>公司電話</th><th>縣市</th><th>區域</th><th>地址</th><th>分類</th><th>職業職稱</th><th>社團職稱</th><th>人脈關係</th><th>見面記事</th><th>建言事項</th><th>陳情事項</th><th>飲食</th><th>興趣</th><th>話題</th><th>其他</th><th>星級</th><th>紅點</th></tr></thead>"
 
-      rawData += `姓名,手機,公司電話,縣市,區域,地址,分類,職業職稱,社團職稱,人脈關係,見面記事,建言事項,陳情事項,飲食,興趣,話題,其他,星級,紅點\r\n`;
+      rawData += `姓名,手機,公司電話,縣市,區域,地址,Email,分類,職業職稱,社團職稱,人脈關係,見面記事,建言事項,陳情事項,飲食,興趣,話題,其他,星級,紅點\r\n`;
 
       Object.keys(this.FieldReordFiltered).forEach((key) => {
         let x = this.FieldReordFiltered[key];
@@ -174,7 +176,7 @@ export default {
 
         rawData += `${x.name},${x.mobilePhone},${x.companyPhone},${x.county},${
           x.district
-        },${x.address},${x.classify},${x.proTitle},${x.clubTitle},${
+        },${x.address},${x.email},${x.classify},${x.proTitle},${x.clubTitle},${
           x.personalConnections
         },${x.meetNotes.replace(/\n/g, "")},${x.suggestions.replace(
           /\n/g,

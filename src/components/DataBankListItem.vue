@@ -53,11 +53,14 @@
           <q-btn
             flat
             icon="close"
-            class="bg-black text-white"
+            class="bg-black text-white"            
+            v-close-popup
             @click.stop.prevent="dialogList = false"
             >離開
-            <q-tooltip content-class="bg-white text-primary">Close</q-tooltip>
+            <!-- <q-tooltip content-class="bg-white text-primary">Close</q-tooltip> -->
+
           </q-btn>
+          <!--  -->
 
           <q-space />
           <q-btn

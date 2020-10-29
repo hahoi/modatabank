@@ -43,6 +43,15 @@
               <q-input v-model="task.companyPhone" label="公司電話" outlined />
             </div>
           </div>
+            <div class="q-ma-md row items-start">
+              <q-input
+                v-model="task.email"
+                label="Email"
+                lazy-rules
+                :rules="[(val) => isValidEmailAddress(val) || '不合格式的 e-mail.']"
+                outlined
+              />
+            </div>
           <div class="q-ma-md row">
             <q-select
               class="col q-mr-md"
@@ -383,6 +392,11 @@ export default {
     toggle() {
       this.task.RedDot = !this.task.RedDot;
       console.log(this.task.RedDot);
+    },
+
+    isValidEmailAddress(email) {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(String(email).toLowerCase());
     },
 
     //刪除照片
