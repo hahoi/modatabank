@@ -37,17 +37,21 @@ exports.AdminDeleteUsers = functions.https.onCall((data, context) => {
 
 exports.logActivities = functions.firestore.document('/{collection}/{id}')
   .onCreate((snap, context) => {
-    console.log(snap.data());
+    // console.log(snap.data());
 
 const activities = admin.firestore().collection('activities');
 const collection = context.params.collection;
 
 if (collection === '現場紀錄表') {
     console.log('現場紀錄表')
+    console.log(snap.data().name);
+    console.log(context.auth.email)
 //   return activities.add({ text: 'a new tutorial request was added' });
 }
 if (collection === 'MDBUsers') {
     console.log('使用者資料')
+    console.log(snap.data().name);
+    console.log(context.auth.email)
 //   return activities.add({ text: 'a new user signed up'});
 }
 

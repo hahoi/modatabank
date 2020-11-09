@@ -9,7 +9,7 @@ import { mapActions } from "vuex";
 export default {
   name: 'App',
   methods: {
-    ...mapActions("auth", ["handleAuthStateChange","getDepartment","getAllRoles"]),
+    ...mapActions("auth", ["handleAuthStateChange","getAllRoles"]),
     ...mapActions('settings', ['getSettings']),
 
   },
