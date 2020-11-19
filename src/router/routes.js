@@ -54,11 +54,12 @@ export const powerRouter = [
       //   path: '/import',
       //   component: () => import('pages/PageImport'),
       //   meta: { title: '匯入', role: 'users', icon: 'group', divider: true }
-      // },                  
+      // },     
+      // // 暫時性的功能，注意role的設定，設成users暫時取代使用者管理功能             
       // {
       //   path: '/backup',
       //   component: () => import('pages/PageBackup'),
-      //   meta: { title: '備份', role: 'PageBackup', icon: 'backup_table', divider: true }
+      //   meta: { title: '備份', role: 'users', icon: 'backup_table', divider: true }
       // },
 
     ]
