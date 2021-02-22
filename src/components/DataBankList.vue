@@ -5,7 +5,7 @@
         <q-item clickable>
           <q-item-section avatar class="col-5  text-grey-8">
             <q-avatar v-if="task.avatar.length !== 0">
-              <img :src="task.avatar" />
+              <img :src="task.avatar" @click="viewPhoto(task.avatar)"/>
             </q-avatar>
           </q-item-section>
           <q-item-section>
@@ -34,7 +34,7 @@
         <q-separator spaced v-if="task.companyPhone.length !== 0" />
 
         <q-item clickable v-if="task.email.length !== 0">
-          <q-item-section avatar class="col-5  text-grey-8"> Email： </q-item-section>
+          <q-item-section avatar class="col-3  text-grey-8"> Email： </q-item-section>
           <q-item-section>
             <q-item-label v-html="task.email">{{
               task.email
@@ -71,7 +71,7 @@
             }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator spaced v-if="task.address.length !== 0" />
+        <q-separator spaced v-if="task.classify.length !== 0" />
 
         <q-item clickable v-if="task.proTitle.length !== 0">
           <q-item-section avatar class="col-5  text-grey-8"> 職業職稱： </q-item-section>

@@ -43,12 +43,12 @@
               <q-input v-model="task.companyPhone" label="公司電話" outlined />
             </div>
           </div>
+          <!-- :rules="[(val) => isValidEmailAddress(val) || '不合格式的 e-mail.',]" -->
             <div class="q-ma-md row items-start">
               <q-input
                 v-model="task.email"
                 label="Email"
                 lazy-rules
-                :rules="[(val) => isValidEmailAddress(val) || '不合格式的 e-mail.']"
                 outlined
               />
             </div>
