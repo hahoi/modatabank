@@ -56,13 +56,14 @@ export default {
           return !x.includes("//"); //去除註解
         });
 
-        // console.log(inputFileArr.length);
+        console.log(inputFileArr.length);
         let clearData = inputFileArr.filter((line) => {
           let item = line.split(",");
-          //   if((item.length !== 9 )){
-          //   console.log(item)
-          //   }
-          return item.length === 9 && item[0] !== ""; //過濾格式不對，及 email是空白的（節點目錄）
+          if (item.length !== 7) {
+            //欄位數量要調整
+            console.log(item);
+          }
+          return item.length === 7 && item[0] !== ""; //過濾格式不對，及 name是空白的（節點目錄）
         });
 
         this.writeToDbArray = [];
@@ -74,12 +75,11 @@ export default {
             name: item[0].trim(),
             mobilePhone: item[1].trim() || "",
             companyPhone: item[2].trim() || "",
-            email: item[3].trim() || "",
-            county: item[4].trim() || "",
-            address: item[5].trim() || "",
-            proTitle: item[6].trim() || "",
-            other: item[7].trim() || "",
-            star: parseInt(item[8].trim()),
+            county: item[3].trim() || "",
+            address: item[4].trim() || "",
+            proTitle: item[5].trim() || "",
+            other: item[6].trim() || "",
+
             avatar: "",
             photo: [],
             district: "",
@@ -95,8 +95,12 @@ export default {
             topic: "",
             update: "",
             zip: "",
+            email:  "",
             RedDot: false,
+            star: 0,
             updateDate: new Date(),
+
+
           };
           this.writeToDbArray.push(data);
         });
@@ -108,7 +112,7 @@ export default {
       };
       reader.readAsText(selectedFile);
     },
-    // ===寫到資料庫===
+    //寫到資料庫
     async saveToFirestore() {
       let dbData = {};
       await dbFirestore
@@ -141,22 +145,65 @@ export default {
         //比較資料
         let match = this.SearchName(data.name, this.dbData);
         let aMatch = Object.values(match)[0]; //取出物件
-        if (aMatch) {//重複
+        let aKey = Object.keys(match)[0];
+        if (aMatch) { //重複
           ++i;
-          // console.log(data.name,data.address,"==",aMatch.name , aMatch.address)
+          console.log(aKey,"--------------------------------")
+          console.log("新",
+            data.name,
+            data.mobilePhone,
+            data.companyPhone,
+            data.county,
+            data.address,
+            data.proTitle,
+            data.other
+          );
+          console.log("舊",
+            aMatch.name,
+            aMatch.mobilePhone,
+            aMatch.companyPhone,
+            aMatch.county,
+            aMatch.address,
+            aMatch.proTitle,
+            aMatch.other
+          );
+          console.log("--------------------------------")
+          // 更新資料
+          let uData = {
+            // mobilePhone: data.mobilePhone,
+            // companyPhone: data.companyPhone,
+            county: data.county,
+            address: data.address,
+            proTitle: data.proTitle,
+            other: data.other,            
+            updateDate: new Date(),
+          };
+          // console.log("更新", data.name, uData);
+          // //更新資料
+          
+          dbFirestore
+            .collection("現場紀錄表")
+            .doc(aKey)
+            .update(uData)
+            .then((ref) => {
+              console.log("更新資料成功！", ref,i);
+            })
+            .catch((error) => {
+              console.error("更新資料失敗！", error);
+            });
         } else {
           ++j;
-          console.log(data.name, data);
+          console.log(data.name, data,j);
           // 寫入資料
-          // dbFirestore
-          //   .collection("現場紀錄表")
-          //   .add(data)
-          //   .then((ref) => {
-          //     console.log("資料庫新增成功！", ref.id);
-          //   })
-          //   .catch((error) => {
-          //     console.error("資料庫儲存失敗！", error);
-          //   });
+          dbFirestore
+            .collection("現場紀錄表")
+            .add(data)
+            .then((ref) => {
+              console.log("資料庫新增成功！", ref.id,j);
+            })
+            .catch((error) => {
+              console.error("資料庫儲存失敗！", error);
+            });
         }
       });
     },
@@ -182,12 +229,32 @@ export default {
       this.writeToDbArray.forEach((data) => {
         let match = this.SearchName(data.name, this.dbData);
         let aMatch = Object.values(match)[0]; //取出物件
-        if (aMatch) {
+        let aKey = Object.keys(match)[0];
+        if (aMatch) {//重複
           ++i;
-          console.log(data.name,data.address,"==",aMatch.name , aMatch.address)
+          console.log(aKey,"--------------------------------")
+          console.log("新",
+            data.name,
+            data.mobilePhone,
+            data.companyPhone,
+            data.county,
+            data.address,
+            data.proTitle,
+            data.other
+          );
+          console.log("舊",
+            aMatch.name,
+            aMatch.mobilePhone,
+            aMatch.companyPhone,
+            aMatch.county,
+            aMatch.address,
+            aMatch.proTitle,
+            aMatch.other
+          );
+          console.log("--------------------------------")
         } else {
           ++j;
-          console.log(data.name, data);
+          console.log(data.name, data.address);
         }
       });
       console.log(i, j);
@@ -206,10 +273,10 @@ export default {
       return match;
     },
 
-        //刪除最近更新
+    //刪除最近更新
     async deleteLastUpdate() {
-      let start = new Date("2020-12-1");
-      let end = new Date("2020-12-21");
+      let start = new Date("2021-02-21");
+      let end = new Date("2021-02-23");
       let delData = {};
       await dbFirestore
         .collection("現場紀錄表")
@@ -240,24 +307,23 @@ export default {
           console.log(err.message);
         });
       // console.log(delData)
-      let i=0
+      let i = 0;
       Object.keys(delData).forEach((key) => {
-        // console.log(key,++i);
-
-        // dbFirestore
-        //   .collection("現場紀錄表")
-        //   .doc(key)
-        //   .delete()
-        //   .then(() => {
-        //     console.log(key,"資料刪除成功！",++i);
-        //   });
+        console.log(key,++i);
+        dbFirestore
+          .collection("現場紀錄表")
+          .doc(key)
+          .delete()
+          .then(() => {
+            console.log(key,"資料刪除成功！",i);
+          });
       });
     },
 
     //最近更新
     LastUpdate() {
-      let start = new Date("2020-12-1");
-      let end = new Date("2020-12-21");
+      let start = new Date("2021-02-21");
+      let end = new Date("2021-02-23");
 
       console.log(start, end);
       dbFirestore
