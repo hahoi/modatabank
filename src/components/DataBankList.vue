@@ -225,13 +225,16 @@
       </q-list>
     </q-card-section>
 
-    <q-dialog v-model="showPhoto" :maximized="true">
+    <q-dialog v-model="showPhoto" :maximized="true" >
       <q-card>
         <q-card-section class="row items-center q-py-none bg-grey-5">
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
-        <img :src="photoUrl" />
+        <div  class="flex column items-center">
+
+        <img :src="photoUrl" style="max-width: 800px;"/>
+        </div>
       </q-card>
     </q-dialog>
   </div>
