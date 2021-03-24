@@ -60,7 +60,12 @@ export const powerRouter = [
       //   path: '/backup',
       //   component: () => import('pages/PageBackup'),
       //   meta: { title: '備份', role: 'users', icon: 'backup_table', divider: true }
-      // },
+      // },      
+      {
+        path: '/ExcelImport',
+        component: () => import('pages/PageExcelImport'),
+        meta: { title: 'Excel匯入', role: 'import', icon: 'group', divider: true }
+      },  
 
     ]
   },
