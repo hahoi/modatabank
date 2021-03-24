@@ -50,11 +50,11 @@ export const powerRouter = [
         component: () => import('pages/PageSettings'),
         meta: { title: '系統設定', role: 'settings', icon: 'api', divider: true }
       },      
-      // {
-      //   path: '/import',
-      //   component: () => import('pages/PageImport'),
-      //   meta: { title: '匯入', role: 'users', icon: 'group', divider: true }
-      // },     
+      {
+        path: '/import',
+        component: () => import('pages/PageImport'),
+        meta: { title: '匯入', role: 'users', icon: 'group', divider: true }
+      },     
       // // 暫時性的功能，注意role的設定，設成users暫時取代使用者管理功能             
       // {
       //   path: '/backup',
