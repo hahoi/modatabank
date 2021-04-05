@@ -16,7 +16,7 @@
           label="Email"
           stack-label
           clearable
-          dense
+          autocomplete="user-email"
         />
       </q-card-section>
 
@@ -31,6 +31,7 @@
           stack-label
           clearable
           dense
+          autocomplete="username"
         />
 
       </q-card-section>
@@ -45,6 +46,7 @@
           stack-label
           clearable
           dense
+          autocomplete="username"
         />
         
       </q-card-section>
@@ -52,7 +54,7 @@
           v-model="formData.password"
           :rules="[
             (val) => !!val || '* 這個欄位必須要輸入',
-            (val) => val.length >= 8 || '至少需要8個字',
+            (val) => val.length >= 6 || 'Please enter at least 6 characters.',
           ]"
           ref="password"
           lazy-rules
@@ -62,6 +64,7 @@
           stack-label
           clearable
           dense
+          autocomplete="new-password"
         />
         
       </q-card-section>
@@ -77,6 +80,7 @@
           stack-label
           clearable
           dense
+          autocomplete="new-password"
         />
         
       </q-card-section>

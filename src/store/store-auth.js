@@ -1,4 +1,4 @@
-import { LocalStorage, Loading } from 'quasar'
+import { LocalStorage, Loading, extend } from 'quasar'
 import { firebaseAuth, dbFirestore } from 'boot/firebase'
 import { powerRouter } from 'src/router/routes'
 import { showErrorMessage } from "src/utils/function-show-error-message";
@@ -82,13 +82,11 @@ const actions = {
 					.set(payload)
 					.then(() => {
 						console.log("註冊新增使用者");
-						firebaseAuth.signOut()
+						firebaseAuth.signOut() //開發時，註冊成功要登出
 					})
 					.catch(error => {
 						console.log(error);
 					});
-
-
 			})
 			.catch(error => {
 				var errorCode = error.code;
@@ -209,8 +207,13 @@ const actions = {
 					showErrorMessage(`你的Email帳號${state.userData.name}已註冊並回傳認證，但目前不能使用或停用狀態，請洽系統管理員。`, "注意")
 					firebaseAuth.signOut()
 				} else {
-					let newrouter = powerRouter //路由換成主要功能的路由
-					let newchildren = powerRouter[0].children.filter(route => {
+					/*
+					// 取得全部路由資料powerRouter，依使用者可使用權限過濾，依權限設定路由、功能表選項newrouter
+					*/
+					//深度拷貝
+					let newrouter = extend(true, [], powerRouter) //let newrouter = powerRouter這樣指定會有問題
+
+					let newchildren = newrouter[0].children.filter(route => {
 						if (route.meta) {
 							//檢查 route.mata.role 是否存在 使用者權限陣列 store.getters.role 中
 							if (state.userData.role.indexOf(route.meta.role) === -1) {
@@ -221,6 +224,7 @@ const actions = {
 						}
 					})
 					newrouter[0].children = newchildren //使用者權限的路由
+					// console.log(newrouter)
 					// console.log(newrouter[0].children)
 					let newMenu = newrouter[0].children.map((item) => {
 						let menu = {
@@ -241,7 +245,7 @@ const actions = {
 					// 登入首頁
 					commit('setLoggedIn', true)
 					LocalStorage.set('loggedIn', true)
-					this.$router.replace('/').catch(err => { })
+					this.$router.replace('/').catch(err => { }) //從這裡進到 index.vue
 				}
 			})
 	},
