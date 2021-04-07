@@ -412,6 +412,7 @@ export default {
   },
   watch: {},
   computed: {
+    ...mapState("auth", ["userData"]),
     ...mapState("LoadData", ["currentId"]),
     ...mapState("phrase", [
       "professionalTitle",
@@ -496,6 +497,7 @@ export default {
 
           //拷貝一份，存入資料庫
           let copyData = Object.assign({}, this.data);
+          //資料庫新增
           this.addFieldRecord(copyData);
           this.$q.notify("存檔中...");
 

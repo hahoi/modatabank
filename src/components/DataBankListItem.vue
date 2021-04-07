@@ -53,14 +53,11 @@
           <q-btn
             flat
             icon="close"
-            class="bg-black text-white"            
-            v-close-popup
+            class="bg-black text-white"
             @click.stop.prevent="dialogList = false"
             >離開
-            <!-- <q-tooltip content-class="bg-white text-primary">Close</q-tooltip> -->
-
+            <q-tooltip content-class="bg-white text-primary">Close</q-tooltip>
           </q-btn>
-          <!--  -->
 
           <q-space />
           <q-btn
@@ -176,6 +173,7 @@ export default {
   mounted() {},
   watch: {},
   computed: {
+    ...mapState("auth", ["userData"]),
     ...mapState("LoadData", ["search"]),
   },
   methods: {
@@ -229,9 +227,14 @@ export default {
                 });
               }
               //刪除資料庫
-              this.deleteFieldRecord(this.id);
+              let payload ={
+                id: this.id,
+                name: this.task.name
+              }
+              this.deleteFieldRecord(payload);
               this.dialogList = false;
               this.$q.notify(`${this.task.name}已刪除`);
+
             });
         });
     },
