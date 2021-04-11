@@ -357,6 +357,27 @@ export default {
           this.reset();
           return false;
         }
+
+
+        // 檢查等級數字
+        let str = collection_json[key]["等級"];
+        if (str) {
+          let regex = /^([012345])$|^(\s+)$/; //只能1到5中一位數或 一個到多個空白
+          // console.log(str,regex.test(str))
+          if (!regex.test(str)) {
+            showErrorMessage(
+              "等級請輸入 0~5間的數字，" + name + "的等級=" + str + "錯誤",
+              "錯誤"
+            );
+            this.reset();
+            return false;
+          }
+        }
+
+        
+
+/*
+
         // 檢查等級數字
         let str = collection_json[key]["等級"];
         let error = false;
@@ -393,7 +414,11 @@ export default {
           this.reset();
           return false;
         }
-      }
+*/
+
+
+      } //end for 
+      // return
 
       //讀取資料庫中資料
       Loading.show();
@@ -460,7 +485,7 @@ export default {
             data_add[key] = data[key];
             //匯入資料有值時，再轉換型態
             data_add.RedDot = data_add.RedDot === "●" ? true : false;
-            data_add.star = parseInt(data_add.star);
+            data_add.star = parseInt(data_add.star) || 0;
           }
         }
         // console.log("add_data", data_add);
