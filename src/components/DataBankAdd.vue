@@ -26,6 +26,7 @@
                 lazy-rules
                 :rules="[(val) => !!val || '* 這個欄位必須要輸入']"
                 outlined
+                @blur="checkRep"
               />
             </div>
             <div class="row q-ma-md row items-start">
@@ -40,14 +41,9 @@
                 />
               </div>
             </div>
-                <!-- :rules="[(val) => isValidEmailAddress(val) || '不合格式的 e-mail.']" -->
+            <!-- :rules="[(val) => isValidEmailAddress(val) || '不合格式的 e-mail.']" -->
             <div class="q-ma-md row items-start">
-              <q-input
-                v-model="data.email"
-                label="Email"
-                lazy-rules
-                outlined
-              />
+              <q-input v-model="data.email" label="Email" lazy-rules outlined />
             </div>
             <div class="q-ma-md row">
               <q-select
@@ -412,6 +408,7 @@ export default {
   },
   watch: {},
   computed: {
+    ...mapState("auth", ["userData"]),
     ...mapState("LoadData", ["currentId"]),
     ...mapState("phrase", [
       "professionalTitle",
@@ -447,7 +444,7 @@ export default {
       this.data.RedDot = !this.data.RedDot;
       console.log(this.data.RedDot);
     },
-    //關閉編輯分類視窗  
+    //關閉編輯分類視窗
     getChildMsg(val) {
       this.dialogCassify = val;
     },
@@ -461,6 +458,22 @@ export default {
     isValidEmailAddress(email) {
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(String(email).toLowerCase());
+    },
+    // 比對姓名是否重複輸入
+    checkRep() {
+      dbFirestore
+        .collection("現場紀錄表")
+        .where("name", "==", this.data.name)
+        .get()
+        .then((qs) => {
+          qs.forEach((doc) => {
+            console.log(doc.data().name);
+            this.$q.dialog({
+              title: "在資料庫中有重複名字",
+              message: `${doc.data().name} -  ${doc.data().proTitle}`,
+            });
+          });
+        });
     },
     onSubmit() {
       this.$refs.form.validate().then((success) => {
@@ -496,6 +509,7 @@ export default {
 
           //拷貝一份，存入資料庫
           let copyData = Object.assign({}, this.data);
+          //資料庫新增
           this.addFieldRecord(copyData);
           this.$q.notify("存檔中...");
 

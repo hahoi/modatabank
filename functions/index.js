@@ -60,6 +60,12 @@ return null;
 });
 
 
+
+// //備份全部資料指令    gcloud firestore export gs://mdb_backup
+// //還原全部資料指令    gcloud firestore import gs://mdb_backup/2020-09-08T02:18:55_34393/
+// //注意：如果數據庫中的文檔不受導入影響，則導入後它將保留在數據庫中。
+
+
 /*================================================================================================
  資料庫備份，利用pub/sub 呼叫cloud function exportDB，再用scheduler 排程執行
  要在 Storage 建立值區 gs://BUCKET_NAME
@@ -96,7 +102,7 @@ exports.scheduledFirestoreExport = functions.pubsub
             name: databaseName,
             outputUriPrefix: bucket,
             // collectionIds: ['users', 'posts']
-            collectionIds: ['現場紀錄表'] //要改的部分 全部備份
+            collectionIds: ['現場紀錄表','MDBUsers'] //要改的部分 全部備份
         })
             .then(responses => {
                 const response = responses[0];

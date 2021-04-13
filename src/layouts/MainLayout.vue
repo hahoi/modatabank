@@ -14,6 +14,7 @@
 
         <q-toolbar-title
           class="flex justify-center text-center text-weight text-h5"
+          @click="reload"
         >
           行動資料庫
         </q-toolbar-title>
@@ -37,6 +38,7 @@
           <q-item-label
             header
             class="text-grey-8 fit row justify-start items-center bg-brown-1"
+            @click="$router.push('/')"
           >
             <img alt="行動資料庫" src="~assets/MDB64.png" />
             <div
@@ -101,7 +103,7 @@
             <!-- <q-space /> -->
 
             <div v-if="FindRecordLength > 0" class="text-h6 text-black">
-              {{ FindRecordLength }}
+              {{FindRecordLength < 3000 ? FindRecordLength : FieldRecordTotalCount   }}
               <span class="text-subtitle1 text-blue-grey-10">筆資料</span>
             </div>
 
@@ -131,7 +133,7 @@ export default {
   },
   computed: {
     ...mapState("auth", ["loggedIn", "newMenu", "userData"]),
-    ...mapState("LoadData", ["FieldReord", "tasksDownloaded", "mdb"]),
+    ...mapState("LoadData", ["FieldReord", "tasksDownloaded", "mdb","FieldRecordTotalCount"]),
     ...mapGetters("LoadData", ["FindRecordLength"]),
   },
   methods: {
@@ -139,6 +141,12 @@ export default {
 			visitOurWebsite() {
 				openURL('https://hahoi.github.io/mdbhelp/')
 			},
+    reload() {
+      //更新
+      window.location.reload(true);
+      //保存最新版本
+      // LocalStorage.set("version", this.settings.version);
+    },
   },
 };
 </script>

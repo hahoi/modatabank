@@ -53,14 +53,11 @@
           <q-btn
             flat
             icon="close"
-            class="bg-black text-white"            
-            v-close-popup
+            class="bg-black text-white"
             @click.stop.prevent="dialogList = false"
             >離開
-            <!-- <q-tooltip content-class="bg-white text-primary">Close</q-tooltip> -->
-
+            <q-tooltip content-class="bg-white text-primary">Close</q-tooltip>
           </q-btn>
-          <!--  -->
 
           <q-space />
           <q-btn
@@ -176,6 +173,7 @@ export default {
   mounted() {},
   watch: {},
   computed: {
+    ...mapState("auth", ["userData"]),
     ...mapState("LoadData", ["search"]),
   },
   methods: {
@@ -229,9 +227,14 @@ export default {
                 });
               }
               //刪除資料庫
-              this.deleteFieldRecord(this.id);
+              let payload ={
+                id: this.id,
+                name: this.task.name
+              }
+              this.deleteFieldRecord(payload);
               this.dialogList = false;
               this.$q.notify(`${this.task.name}已刪除`);
+
             });
         });
     },
@@ -264,12 +267,15 @@ export default {
             if (typeof task[key] === "string") {
               let item = task[key];
               // console.log(key,task[key])
-              let searchLowerCase = keyword.toLowerCase();
-              if (item.includes(searchLowerCase)) {
+              let searchLowerCase = keyword.toLowerCase(); //要轉成小寫英文姓名才不會出錯
+              let itemLowerCase = item.toLowerCase()       //要轉成小寫英文姓名才不會出錯
+              if (itemLowerCase.includes(searchLowerCase)) {
+                keyword = keyword.replaceAll("?", "") //去除??，匯入時字元錯誤產生
+                // console.log(keyword)
                 let regex = new RegExp(keyword, "i");
                 let match = item.match(regex);
                 // console.log(regex,match)
-                if (match) {
+                if (match[0] !== '') {
                   item = item.replace(
                     regex,
                     "<span class='bg-red text-white'>" + match[0] + "</span>"

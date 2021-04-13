@@ -97,9 +97,9 @@
         </span>
       </div>
     </template>
-    <!-- v-if="conditions !== ''" -->
     <template v-else>
-      <div class="q-mt-xl q-pt-xl" ref="showRecord" >
+      <div class="q-mt-xl q-pt-xl" ref="showRecord">
+        <!-- 列出查詢結果 -->
         <show-record></show-record>
       </div>
     </template>
@@ -218,9 +218,16 @@ export default {
   mounted() {
     this.clearFieldReord();
   },
-  watch: {},
+  watch: {
+    conditions() {
+      if (this.conditions === "") {
+        this.clearFieldReord();
+      }
+    },
+  },
   computed: {
-    ...mapState("LoadData", [ "tasksDownloaded"]),
+    ...mapState("auth", ["userData"]),
+    ...mapState("LoadData", ["tasksDownloaded"]),
     ...mapGetters("LoadData", ["FindRecordLength"]),
     ...mapState("phrase", ["professionalTitle", "Cassify", "counties"]),
 
@@ -252,8 +259,9 @@ export default {
       "setTasksDownloaded",
       "clearFieldReord",
       "setMDB",
+      "setFieldRecordTotalCount",
     ]),
-    ...mapActions("LoadData", ["setFilter", "setSearch"]),
+    ...mapActions("LoadData", ["setFilter", "setSearch", "log"]),
     ...mapActions("phrase", ["readProfessionalTitle", "ReadCassify"]),
 
     //紅點切換
@@ -282,6 +290,13 @@ export default {
       let county = !this.county ? "" : this.county;
       let classify = !this.classify ? "" : this.classify;
       let RedDot = this.RedDot;
+
+      // 紀錄
+      let payload = {
+        do: "查詢資料",
+        data: this.conditionsSetSearch,
+      };
+      this.log(payload);
 
       //查詢條件空白
       if (
@@ -1267,8 +1282,10 @@ export default {
     SearchName(name, data) {
       let match = {};
       Object.keys(data).forEach((key) => {
-        if (data[key]["name"].includes(name)) {
-          // console.log(data[key]["name"]);
+        let searchLowerCase = data[key]["name"].toLowerCase(); //要轉成小寫英文姓名才不會出錯
+        let nameLowerCase = name.toLowerCase(); //要轉成小寫英文姓名才不會出錯
+        if (searchLowerCase.includes(nameLowerCase)) {
+          // console.log(nameLowerCase,searchLowerCase);
           Vue.set(match, key, data[key]); //符合條件的存在物件中
         }
       });
@@ -1285,7 +1302,7 @@ export default {
       let duration = 1000;
       setScrollPosition(target, offset, duration);
     },
-    
+
     //沒有下查詢條件列出所有紀錄
     async listAllRecord() {
       let vm = this;
@@ -1294,30 +1311,73 @@ export default {
 
       let dbData = {};
       this.Downloading = true;
-      await dbFirestore
-        .collection("現場紀錄表")
-        .get()
-        .then((qs) => {
-          if (qs.empty) {
-            this.$q.dialog({
-              title: "",
-              message: "查不到",
+
+      const query = dbFirestore.collection("現場紀錄表");
+      const snapshot = await query.get();
+      const count = snapshot.size; //計算總筆數
+      console.log(count);
+      this.setFieldRecordTotalCount(count); //設定總筆數
+      // 超過3000筆資料，僅顯示3000筆
+      if (count > 3000) {
+        await query
+          .orderBy("updateDate", "desc")
+          .limit(3000)
+          .get()
+          .then((qs) => {
+            if (qs.empty) {
+              this.$q.dialog({
+                title: "",
+                message: "查不到",
+              });
+              this.Downloading = false;
+              return false;
+            }
+            qs.forEach((doc) => {
+              // console.log(doc.data().name);
+              Vue.set(dbData, doc.id, doc.data());
             });
             this.Downloading = false;
-            return false;
-          }
-          qs.forEach((doc) => {
-            // console.log(doc.data().name);
-            Vue.set(dbData, doc.id, doc.data());
+          })
+          .catch((err) => {
+            console.log(err.message);
           });
-          this.Downloading = false;
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
-      this.setFieldReord(dbData);
-      await vm.scrollToElement();
-      return true;
+        this.setFieldReord(dbData);
+        await vm.scrollToElement();
+        // return true;
+      } else {
+        // 小於3000筆資料
+        await dbFirestore
+          .collection("現場紀錄表")
+          .get()
+          .then((qs) => {
+            if (qs.empty) {
+              this.$q.dialog({
+                title: "",
+                message: "查不到",
+              });
+              this.Downloading = false;
+              return false;
+            }
+            qs.forEach((doc) => {
+              // console.log(doc.data().name);
+              Vue.set(dbData, doc.id, doc.data());
+            });
+            this.Downloading = false;
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+        this.setFieldReord(dbData);
+        await vm.scrollToElement();
+        // return true;
+      }
+
+      // 紀錄
+      let payload = {
+        do: "列出全部資料",
+        data: null,
+      };
+      this.log(payload);
     },
   }, // methods end
 };
