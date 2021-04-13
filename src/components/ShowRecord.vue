@@ -174,11 +174,7 @@ export default {
       // let tr = "<table id='tblData' ref='tblData' border='1'>";
       //     tr +="<thead><tr><th>姓名</th><th>手機</th><th>公司電話</th><th>縣市</th><th>區域</th><th>地址</th><th>分類</th><th>職業職稱</th><th>社團職稱</th><th>人脈關係</th><th>見面記事</th><th>建言事項</th><th>陳情事項</th><th>飲食</th><th>興趣</th><th>話題</th><th>其他</th><th>等級</th><th>註記</th></tr></thead>"
 
-<<<<<<< HEAD
       rawData += `姓名","手機","公司電話","縣市","區域","地址","Email","分類","職業職稱","社團職稱","人脈關係","見面記事","建言事項","陳情事項","飲食","興趣","話題","其他","星級","紅點"\r\n`;
-=======
-      rawData += `姓名,手機,公司電話,縣市,區域,地址,Email,分類,職業職稱,社團職稱,人脈關係,見面記事,建言事項,陳情事項,飲食,興趣,話題,其他,等級,註記\r\n`;
->>>>>>> export
 
       Object.keys(this.FieldReordFiltered).forEach((key) => {
         let x = this.FieldReordFiltered[key];

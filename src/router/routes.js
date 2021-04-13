@@ -51,7 +51,6 @@ export const powerRouter = [
         meta: { title: '使用者管理', role: 'users', icon: 'group', divider: true }
       },         
       {
-<<<<<<< HEAD
         path: '/settings',
         component: () => import('pages/PageSettings'),
         meta: { title: '系統設定', role: 'settings', icon: 'api', divider: true }
@@ -60,8 +59,8 @@ export const powerRouter = [
         path: '/import',
         component: () => import('pages/PageImport'),
         meta: { title: '匯入', role: 'users', icon: 'group', divider: true }
-      },     
-=======
+      },  
+      {   
         path: '/loglist',
         component: () => import('pages/PageLogList'),
         meta: { title: 'log紀錄', role: 'LogList', icon: 'group', divider: true }
@@ -76,7 +75,6 @@ export const powerRouter = [
       //   component: () => import('pages/PageImport'),
       //   meta: { title: '匯入', role: 'users', icon: 'group', divider: true }
       // },     
->>>>>>> export
       // // 暫時性的功能，注意role的設定，設成users暫時取代使用者管理功能             
       // {
       //   path: '/backup',
