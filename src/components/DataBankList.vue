@@ -42,7 +42,9 @@
             Email：
           </q-item-section>
           <q-item-section>
-            <q-item-label class="" v-html="task.email">{{ task.email }}</q-item-label>
+            <q-item-label>
+              <div class="email" v-html="task.email"></div>
+            </q-item-label>
           </q-item-section>
         </q-item>
         <q-separator spaced v-if="task.email !== ''" />
@@ -225,15 +227,14 @@
       </q-list>
     </q-card-section>
 
-    <q-dialog v-model="showPhoto" :maximized="true" >
+    <q-dialog v-model="showPhoto" :maximized="true">
       <q-card>
         <q-card-section class="row items-center q-py-none bg-grey-5">
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
-        <div  class="flex column items-center">
-
-        <img :src="photoUrl" style="max-width: 800px;"/>
+        <div class="flex column items-center">
+          <img :src="photoUrl" style="max-width: 800px" />
         </div>
       </q-card>
     </q-dialog>
@@ -266,5 +267,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.email {
+  overflow: auto;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
 </style>
