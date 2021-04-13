@@ -4,7 +4,7 @@
       <q-list class="text-h6">
         <q-item clickable>
           <q-item-section avatar class="col-5 text-grey-8">
-            <q-avatar v-if="task.avatar.length !== 0">
+            <q-avatar v-if="task.avatar !== ''">
               <img :src="task.avatar" @click="viewPhoto(task.avatar)" />
             </q-avatar>
           </q-item-section>
@@ -13,7 +13,7 @@
           </q-item-section>
         </q-item>
         <q-separator spaced />
-        <q-item clickable v-if="task.mobilePhone.length !== 0">
+        <q-item clickable v-if="task.mobilePhone !== ''">
           <q-item-section avatar class="col-5 text-grey-8">
             手機：
           </q-item-section>
@@ -23,9 +23,9 @@
             }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator spaced v-if="task.mobilePhone.length !== 0" />
+        <q-separator spaced v-if="task.mobilePhone !== ''" />
 
-        <q-item clickable v-if="task.companyPhone.length !== 0">
+        <q-item clickable v-if="task.companyPhone !== ''">
           <q-item-section avatar class="col-5 text-grey-8">
             公司電話：
           </q-item-section>
@@ -35,19 +35,19 @@
             }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator spaced v-if="task.companyPhone.length !== 0" />
+        <q-separator spaced v-if="task.companyPhone !== ''" />
 
-        <q-item clickable v-if="task.email.length !== 0">
-          <q-item-section avatar class="col-3 text-grey-8">
+        <q-item clickable v-if="task.email !== ''">
+          <q-item-section avatar class="col-5 text-grey-8">
             Email：
           </q-item-section>
           <q-item-section>
-            <q-item-label v-html="task.email">{{ task.email }}</q-item-label>
+            <q-item-label class="" v-html="task.email">{{ task.email }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator spaced v-if="task.email.length !== 0" />
+        <q-separator spaced v-if="task.email !== ''" />
 
-        <q-item clickable v-if="task.county.length !== 0">
+        <q-item clickable v-if="task.county !== ''">
           <q-item-section class="col-5 text-grey-8">
             <q-item-label v-html="task.county"></q-item-label>
           </q-item-section>
@@ -55,9 +55,9 @@
             <q-item-label v-html="task.district"></q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator spaced v-if="task.county.length !== 0" />
+        <q-separator spaced v-if="task.county !== ''" />
 
-        <q-item clickable v-if="task.address.length !== 0">
+        <q-item clickable v-if="task.address !== ''">
           <q-item-section avatar class="col-5 text-grey-8">
             地址：
           </q-item-section>
@@ -67,9 +67,9 @@
             }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator spaced v-if="task.address.length !== 0" />
+        <q-separator spaced v-if="task.address !== ''" />
 
-        <q-item clickable v-if="task.classify.length !== 0">
+        <q-item clickable v-if="task.classify !== ''">
           <q-item-section avatar class="col-5 text-grey-8">
             分類：
           </q-item-section>
@@ -79,9 +79,9 @@
             }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator spaced v-if="task.classify.length !== 0" />
+        <q-separator spaced v-if="task.classify !== ''" />
 
-        <q-item clickable v-if="task.proTitle.length !== 0">
+        <q-item clickable v-if="task.proTitle !== ''">
           <q-item-section avatar class="col-5 text-grey-8">
             職業職稱：
           </q-item-section>
@@ -91,9 +91,9 @@
             }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator spaced v-if="task.proTitle.length !== 0" />
+        <q-separator spaced v-if="task.proTitle !== ''" />
 
-        <q-item clickable v-if="task.clubTitle.length !== 0">
+        <q-item clickable v-if="task.clubTitle !== ''">
           <q-item-section avatar class="col-5 text-grey-8">
             社團職稱：
           </q-item-section>
@@ -103,9 +103,9 @@
             }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator spaced v-if="task.clubTitle.length !== 0" />
+        <q-separator spaced v-if="task.clubTitle !== ''" />
 
-        <q-item clickable v-if="task.personalConnections.length !== 0">
+        <q-item clickable v-if="task.personalConnections !== ''">
           <q-item-section avatar class="col-5 text-grey-8">
             人脈關係：
           </q-item-section>
@@ -115,9 +115,9 @@
             }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator spaced v-if="task.personalConnections.length !== 0" />
+        <q-separator spaced v-if="task.personalConnections !== ''" />
 
-        <q-item clickable v-if="task.meetNotes.length !== 0">
+        <q-item clickable v-if="task.meetNotes !== ''">
           <q-item-section avatar class="col-5 text-grey-8">
             見面記事：
           </q-item-section>
@@ -127,9 +127,9 @@
             }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator spaced v-if="task.meetNotes.length !== 0" />
+        <q-separator spaced v-if="task.meetNotes !== ''" />
 
-        <q-item clickable v-if="task.suggestions.length !== 0">
+        <q-item clickable v-if="task.suggestions !== ''">
           <q-item-section avatar class="col-5 text-grey-8">
             建言事項：
           </q-item-section>
@@ -139,9 +139,9 @@
             }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator spaced v-if="task.suggestions.length !== 0" />
+        <q-separator spaced v-if="task.suggestions !== ''" />
 
-        <q-item clickable v-if="task.petitionMatters.length !== 0">
+        <q-item clickable v-if="task.petitionMatters !== ''">
           <q-item-section avatar class="col-5 text-grey-8">
             陳情事項：
           </q-item-section>
@@ -151,9 +151,9 @@
             }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator spaced v-if="task.petitionMatters.length !== 0" />
+        <q-separator spaced v-if="task.petitionMatters !== ''" />
 
-        <q-item clickable v-if="task.diet.length !== 0">
+        <q-item clickable v-if="task.diet !== ''">
           <q-item-section avatar class="col-5 text-grey-8">
             飲食：
           </q-item-section>
@@ -161,9 +161,9 @@
             <q-item-label v-html="task.diet">{{ task.diet }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator spaced v-if="task.diet.length !== 0" />
+        <q-separator spaced v-if="task.diet !== ''" />
 
-        <q-item clickable v-if="task.interest.length !== 0">
+        <q-item clickable v-if="task.interest !== ''">
           <q-item-section avatar class="col-5 text-grey-8">
             興趣：
           </q-item-section>
@@ -173,9 +173,9 @@
             }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator spaced v-if="task.interest.length !== 0" />
+        <q-separator spaced v-if="task.interest !== ''" />
 
-        <q-item clickable v-if="task.topic.length !== 0">
+        <q-item clickable v-if="task.topic !== ''">
           <q-item-section avatar class="col-5 text-grey-8">
             話題：
           </q-item-section>
@@ -183,9 +183,9 @@
             <q-item-label v-html="task.topic">{{ task.topic }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator spaced v-if="task.topic.length !== 0" />
+        <q-separator spaced v-if="task.topic !== ''" />
 
-        <q-item clickable v-if="task.other.length !== 0">
+        <q-item clickable v-if="task.other !== ''">
           <q-item-section avatar class="col-5 text-grey-8">
             其他：
           </q-item-section>
@@ -193,7 +193,7 @@
             <q-item-label v-html="task.other">{{ task.other }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator spaced v-if="task.other.length !== 0" />
+        <q-separator spaced v-if="task.other !== ''" />
         <!-- 星級 --><!-- 紅點 -->
         <div class="q-gutter-md q-my-md row items-start">
           <q-rating
