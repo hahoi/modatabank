@@ -55,16 +55,16 @@ export const powerRouter = [
         component: () => import('pages/PageSettings'),
         meta: { title: '系統設定', role: 'settings', icon: 'api', divider: true }
       },      
-      {
-        path: '/import',
-        component: () => import('pages/PageImport'),
-        meta: { title: '匯入', role: 'users', icon: 'group', divider: true }
-      },  
       {   
         path: '/loglist',
         component: () => import('pages/PageLogList'),
         meta: { title: 'log紀錄', role: 'LogList', icon: 'group', divider: true }
       },       
+      // {
+      //   path: '/import',
+      //   component: () => import('pages/PageImport'),
+      //   meta: { title: '匯入', role: 'users', icon: 'group', divider: true }
+      // },  
       // {
       //   path: '/settings',
       //   component: () => import('pages/PageSettings'),
